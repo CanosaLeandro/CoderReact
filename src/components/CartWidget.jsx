@@ -1,6 +1,6 @@
 import { BiCart } from "react-icons/bi"
 
-export default function Cart() {
+export default function cart() {
   return (
     <>
       <BiCart color="yellow" size={50} value="4"/>
