@@ -1,21 +1,29 @@
-import { BiCart } from "react-icons/bi"
+import { useContext } from "react";
+import { CartContext } from "../context/cart/index";
+import { BiCart } from "react-icons/bi";
+import { NavLink } from "react-router-dom";
 
-export default function cart() {
+const CartWidget = () => {
+  const { cart, setCart } = useContext(CartContext);
+
   return (
-    <>
-      <BiCart color="yellow" size={50} value="4"/>
+    <NavLink to={"/cart"}>
+      <BiCart color="grey" size={35} value="4" />
       <span
-        className="badge badge-warning"
+        className="badge badge-warning bg-danger"
         style={{
-          padding: "0 3px",
-          backgroundColor: "red",
-          fontSize: "1rem",
+          padding: "0.17rem 0.17rem",
+          fontSize: "0.8rem",
           borderRadius: "5px",
           position: "relative",
           marginTop: "-15px",
-          marginLeft: "-10px"
+          marginLeft: "-10px",
         }}
-      >5</span>
-    </>
-  )
-}
+      >
+        {cart.length}
+      </span>
+    </NavLink>
+  );
+};
+
+export default CartWidget;

@@ -1,104 +1,251 @@
 :root {
   --card-height: 300px;
   --card-width: calc(var(--card-height) / 1.5);
+  --bg-url: url("../assets/background.jpg");
 }
 
 * {
   box-sizing: border-box;
 }
 
-.card {
-  width: var(--card-width);
-  height: var(--card-height);
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 0 36px;
-  perspective: 2500px;
-  margin: 0 50px;
+.body-background {
+  background-image: var(--bg-url);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 92vh;
 }
 
-.cover-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+nav {
+  height: 8vh;
 }
 
-.wrapper {
-  transition: all 0.5s;
-  position: absolute;
-  width: 100%;
-  z-index: -1;
+.dropdown-item:hover,
+.dropdown-item:active {
+  transition: 0.35s;
+  background-color: rgb(0, 0, 0, 0);
+  margin-left: 0.5rem;
 }
 
-.card:hover .wrapper {
-  transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
-  box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+.card-product {
+  border-radius: rounded;
+  height: 15rem;
+  width: 20rem;
+  cursor: pointer;
 }
 
-.wrapper::before,
-.wrapper::after {
+.card-product:before {
+  background: linear-gradient(
+    45deg,
+    transparent 5%,
+    rgb(255, 215, 137) 50%,
+    transparent 99%
+  );
+  transition: opacity 200ms;
+  border-radius: inherit;
   content: "";
+  inset: 0px;
   opacity: 0;
-  width: 100%;
-  height: 80px;
-  transition: all 0.5s;
   position: absolute;
-  left: 0;
+  z-index: 0;
 }
 
-.wrapper::before {
-  top: 0;
-  height: 100%;
-  background-image: linear-gradient(
-    to top,
-    transparent 46%,
-    rgba(12, 13, 19, 0.5) 68%,
-    rgba(12, 13, 19) 97%
-  );
-}
-
-.wrapper::after {
-  bottom: 0;
-  opacity: 1;
-  background-image: linear-gradient(
-    to bottom,
-    transparent 46%,
-    rgba(12, 13, 19, 0.5) 68%,
-    rgba(12, 13, 19) 97%
-  );
-}
-
-.card:hover .wrapper::before,
-.wrapper::after {
+.card-product:hover:before {
   opacity: 1;
 }
 
-.card:hover .wrapper::after {
-  height: 120px;
-}
-
-.title {
-  width: 100%;
-  transition: transform 0.5s;
-}
-
-.card:hover .title {
-  transform: translate3d(0%, -50px, 100px);
-}
-
-.character {
-  width: 100%;
-  opacity: 0;
-  transition: all 0.5s;
+.card-content {
+  border-radius: inherit;
+  inset: 1px;
   position: absolute;
-  z-index: -1;
 }
 
-.card:hover .character {
-  opacity: 1;
-  transform: translate3d(0%, -30%, 100px);
+.products-grid {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(5, 1fr);
+  max-width: max-content;
+  padding: 1em 0em;
+  place-self: center;
+  position: relative;
+  width: calc(100% - 2em);
+  z-index: 2;
+  max-height: 100%;
+  overflow-y: scroll;
+}
+
+.products-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.product-image {
+  max-height: 15rem;
+  max-width: 20rem;
+  padding: 1rem;
+}
+
+.card-details {
+  /* background-image: ; */
+  height: 80%;
+  width: 80%;
+  position: absolute;
+}
+
+img {
+  height: inherit;
+  width: auto;
+  padding: 1rem;
+}
+
+/* Cart component */
+ul {
+  list-style: none;
+  margin-bottom: 0px;
+}
+.button {
+  display: inline-block;
+  background: #0e8ce4;
+  border-radius: 5px;
+  height: 48px;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+.button a {
+  display: block;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 48px;
+  color: #ffffff;
+  padding-left: 35px;
+  padding-right: 35px;
+}
+.button:hover {
+  opacity: 0.8;
+}
+.cart_section {
+  width: 100%;
+  overflow-y: scroll;
+  max-height: 100%;
+}
+.cart_title {
+  font-size: 30px;
+  font-weight: 500;
+}
+.cart_items {
+  margin-top: 8px;
+}
+.cart_list {
+  border: solid 1px #e8e8e8;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+.cart_item {
+  width: 100%;
+  padding: 1rem;
+}
+.cart_item_image {
+  width: 133px;
+  height: 133px;
+  float: left;
+}
+.cart_item_image img {
+  max-width: 100%;
+}
+.cart_item_info {
+  width: calc(100% - 133px);
+  float: left;
+  padding-top: 18px;
+  padding-right: 3%;
+}
+.cart_item_name {
+  margin-left: 7.53%;
+}
+.cart_item_title {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5);
+}
+.cart_item_text {
+  font-size: 18px;
+  margin-top: 35px;
+}
+.cart_item_text span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 11px;
+  -webkit-transform: translateY(4px);
+  -moz-transform: translateY(4px);
+  -ms-transform: translateY(4px);
+  -o-transform: translateY(4px);
+  transform: translateY(4px);
+}
+.cart_item_price {
+  text-align: right;
+}
+.cart_item_total {
+  text-align: right;
+}
+.order_total {
+  width: 100%;
+  height: 60px;
+  margin-top: 30px;
+  border: solid 1px #e8e8e8;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  padding-right: 46px;
+  padding-left: 15px;
+  background-color: #fff;
+}
+.order_total_title {
+  display: inline-block;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 60px;
+}
+.order_total_amount {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 26px;
+  line-height: 60px;
+}
+.cart_buttons {
+  margin-top: 60px;
+  text-align: right;
+}
+.cart_button_clear {
+  display: inline-block;
+  border: none;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 48px;
+  color: rgba(0, 0, 0, 0.5);
+  background: #ffffff;
+  border: solid 1px #b2b2b2;
+  padding-left: 35px;
+  padding-right: 35px;
+  outline: none;
+  cursor: pointer;
+  margin-right: 26px;
+}
+.cart_button_clear:hover {
+  border-color: #0e8ce4;
+  color: #0e8ce4;
+}
+.cart_button_checkout {
+  display: inline-block;
+  border: none;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 48px;
+  color: #ffffff;
+  padding-left: 35px;
+  padding-right: 35px;
+  outline: none;
+  cursor: pointer;
+  vertical-align: top;
 }

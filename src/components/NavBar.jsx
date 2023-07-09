@@ -7,19 +7,21 @@ import CartWidget from "./CartWidget";
 import { NavLink } from "react-router-dom/dist";
 
 export default function navbar() {
-  console.log(process.env.ETSY_API_KEY);
   return (
-    <Navbar bg="dark" variant="dark" expand="md" sticky="top">
+    <Navbar
+      className="align-items-stretch"
+      bg="dark"
+      variant="dark"
+      expand="md"
+    >
       <Container fluid>
         <Navbar.Brand href="/">
           <Container>
             <img
               src={BulbLogo}
               alt="Fotnia logo"
-              width="auto"
-              height="30"
-              className="d-inline-block align-top"
-              style={{ borderRadius: "30px" }}
+              className="d-inline-block align-top p-0"
+              style={{ borderRadius: "30px", height: "30px", width: "auto" }}
             />
           </Container>
           Fotnia
@@ -28,18 +30,14 @@ export default function navbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link>
-              <NavLink
-                to={"/catalog"}
-                className="text-reset text-decoration-none"
-              >
-                Catalog
-              </NavLink>
-            </Nav.Link>
-            <NavDropdown title="Categories" id="basic-nav-dropdown">
+            <NavDropdown
+              menuVariant="dark"
+              title="Categories"
+              id="basic-nav-dropdown"
+            >
               <NavDropdown.Item>
                 <NavLink
-                  to={"/catalog"}
+                  to={"/categories/electronics"}
                   className="text-reset text-decoration-none"
                 >
                   Electronics
@@ -47,15 +45,28 @@ export default function navbar() {
               </NavDropdown.Item>
               <NavDropdown.Item>
                 <NavLink
-                  to={"/catalog"}
+                  to={"/categories/jewelry"}
                   className="text-reset text-decoration-none"
                 >
                   Jewelry
                 </NavLink>
               </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>All items</NavDropdown.Item>
+              <NavDropdown.Item>
+                <NavLink
+                  to={"/categories/clothing"}
+                  className="text-reset text-decoration-none"
+                >
+                  Clothing
+                </NavLink>
+              </NavDropdown.Item>
             </NavDropdown>
+            <Nav.Link
+              as={NavLink}
+              to={"/catalog"}
+              className="text-decoration-none"
+            >
+              Catalog
+            </Nav.Link>
           </Nav>
           <CartWidget />
         </Navbar.Collapse>
