@@ -4,7 +4,7 @@ import { BiCart } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
 
 const CartWidget = () => {
-  const { cart, setCart } = useContext(CartContext);
+  const { cart } = useContext(CartContext);
 
   return (
     <NavLink to={"/cart"}>

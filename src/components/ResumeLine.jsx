@@ -5,7 +5,8 @@ const ResumeLine = (props) => {
 
   return (
     <>
-      <li className="cart_item d-flex">
+      {console.log(item)}
+      <li key={item.id} className="cart_item d-flex">
         <div className="d-flex justify-content-between">
           <div className="cart_item_image">
             <Image src={item.image} />

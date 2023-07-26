@@ -16,7 +16,9 @@ import Cart from "./components/Cart";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { Brief } from "./components/Brief";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -31,14 +33,14 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+initializeApp(firebaseConfig);
 
 const App = () => {
   return (
     <div className="App">
-      <SkeletonTheme>
-        <CartProvider>
+      <CartProvider>
+        <ToastContainer/>
+        <SkeletonTheme>
           <BrowserRouter>
             <Navbar />
             <div className="body-background d-flex align-items-center justify-content-center">
@@ -48,11 +50,12 @@ const App = () => {
                 <Route path="/categories/:category" element={<Catalog />} />
                 <Route path="/item/:id" element={<ItemDetails />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Brief />} />
               </Routes>
             </div>
           </BrowserRouter>
-        </CartProvider>
-      </SkeletonTheme>
+        </SkeletonTheme>
+      </CartProvider>
     </div>
   );
 };

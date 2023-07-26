@@ -8,6 +8,13 @@
   box-sizing: border-box;
 }
 
+.home-logo {
+  overflow: hidden;
+  animation: float 6s ease-in-out infinite;
+  transform: translatey(0px);
+  img { width: 100%; height: auto; }
+}
+
 .body-background {
   background-image: var(--bg-url);
   background-position: center;
@@ -18,6 +25,15 @@
 
 nav {
   height: 8vh;
+}
+
+img {
+  width: auto;
+  padding: 1rem;
+}
+
+button {
+  width: fit-content;
 }
 
 .dropdown-item:hover,
@@ -63,12 +79,11 @@ nav {
 
 .products-grid {
   display: grid;
-  gap: 1rem;
+  gap: 3rem;
   grid-auto-rows: 15rem;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
   padding: 1em 0em;
   place-self: center;
-  position: relative;
   max-width: calc(100% - 10rem);
   z-index: 2;
   max-height: 100%;
@@ -79,6 +94,10 @@ nav {
   display: none;
 }
 
+.cart_section::-webkit-scrollbar {
+  display: none;
+}
+
 .product-image {
   max-height: 15rem;
   max-width: 15rem;
@@ -86,7 +105,7 @@ nav {
 }
 
 .product-details {
-  max-width: 50%;
+  max-width: 70%;
 }
 
 .product-details-image {
@@ -100,15 +119,44 @@ nav {
   justify-content: center;
 }
 
+.card-headling {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
 .card-body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-img {
-  width: auto;
-  padding: 1rem;
+.card-caption {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.details-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-input {
+  width: fit-content;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+    width: fit-content;
 }
 
 /* Cart component */
@@ -279,4 +327,23 @@ ul {
   outline: none;
   cursor: pointer;
   vertical-align: top;
+}
+
+/* Checkout form */
+.checkout-form {
+  width: 70%;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkout-submit {
+  align-self: center;
+}
+
+.checkout-buttons {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  gap: 1rem;
 }

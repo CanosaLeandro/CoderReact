@@ -8,7 +8,7 @@ const DynamicBackground = () => {
   useEffect(() => {
     const handleRedirect = () => {
       const url =
-        history.location.pathname == "catalog"
+        history.location.pathname === "catalog"
           ? "catalog-background.jpg"
           : "background.jpg";
       setBackgroundImage(url);

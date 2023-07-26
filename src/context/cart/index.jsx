@@ -1,73 +1,41 @@
 import { createContext, useState } from "react";
-import items from "../../items.json";
 
-const CartContext = createContext({
-  cartProducts: {},
-});
+const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  const addToCart = (item) => {
-    const existingItem = cart[item.title];
+  const addToCart = (item, quantity) => {
+    const existingItem = cart.find((i) => i.title === item.title);
 
-    if (existingItem) {
-      ++existingItem.quantity;
-      setCart({
-        ...cart,
-        [item.title]: existingItem,
-      });
-    } else {
-      setCart({
-        ...cart,
-        [item.title]: {
-          ...item,
-          quantity: 1,
-        },
-      });
-    }
+    existingItem
+      ? (existingItem.quantity += quantity)
+      : setCart([
+          ...cart,
+          {
+            ...item,
+            quantity: quantity,
+          },
+        ]);
   };
 
   const removeFromCart = (item) => {
-    setCart((prevCart) => prevCart.filter((i) => i.title !== item.title));
+    setCart(cart.filter((i) => i.title !== item.title));
   };
 
   const clearCart = () => {
     setCart([]);
   };
 
-  const itemsInCart = () => {
-    let newItems = items.filter((i) => {
-      return (
-        i.id &&
-        i.title &&
-        i.price &&
-        i.image &&
-        i.description &&
-        i.category &&
-        i.rating.rate &&
-        i.rating.count
-      );
-    });
-
-    newItems.map((i) => {
-      i.stock = i.rating.count;
-      i.quantity = i.rating.rate.toFixed(0);
-    });
-
-    return newItems;
+  const cartContextValue = {
+    cart,
+    addToCart,
+    removeFromCart,
+    clearCart,
   };
 
   return (
-    <CartContext.Provider
-      value={{
-        cart: itemsInCart(),
-        setCart,
-        addToCart,
-        removeFromCart,
-        clearCart,
-      }}
-    >
+    <CartContext.Provider value={cartContextValue}>
       {children}
     </CartContext.Provider>
   );

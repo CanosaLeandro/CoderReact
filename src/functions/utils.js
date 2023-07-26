@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   doc,
   getDoc,
@@ -7,40 +6,24 @@ import {
   getFirestore,
   query,
   where,
+  addDoc,
 } from "firebase/firestore";
 
-function sleep(s) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, s * 1000);
-  });
-}
-
-const allProducts = async (state) => {
-  const request = await axios.get("https://fakestoreapi.com/products");
-  state(request.data);
-};
-
-const getProduct = async (state, id) => {
-  const request = await axios
-    .get(`https://fakestoreapi.com/products/${id}`)
-    .then(await sleep(0));
-  state(request.data);
-};
-
-const getItem = async (id) => {
+const getItem = async (state, id) => {
   const db = getFirestore();
   const itemRef = doc(db, "items", id);
   const snapshot = await getDoc(itemRef);
   if (snapshot.exists()) {
-    return { id: snapshot.id, ...snapshot.data() };
+    return state({ id: snapshot.id, ...snapshot.data() });
   }
 
-  return null;
+  return state(null);
 };
 
 const getItems = async () => {
   const db = getFirestore();
-  const snapshot = await getDocs(collection(db, "items"));
+  const itemsRef = collection(db, "items");
+  const snapshot = await getDocs(itemsRef);
   if (snapshot.size === 0) {
     return null;
   }
@@ -48,12 +31,19 @@ const getItems = async () => {
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
-const getItemByCategory = async (category) => {
+const getItemsByCategory = async (state, category) => {
   const db = getFirestore();
-  const q = query(collection(db, "items"), where("category", "==", category));
-  const snapshot = getDocs(q);
-  if (snapshot.exists()) {
-    return { id: snapshot.id, ...snapshot.data() };
+  const itemsRef = collection(db, "items");
+  const q =
+    category === "clothing"
+      ? query(
+          itemsRef,
+          where("category", "in", ["men's clothing", "women's clothing"])
+        )
+      : query(itemsRef, where("category", "==", category));
+  const snapshot = await getDocs(q);
+  if (!snapshot.empty) {
+    return state(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
   }
 
   return null;
@@ -61,15 +51,28 @@ const getItemByCategory = async (category) => {
 
 const allItems = async (state) => {
   const items = await getItems();
-  console.log(items);
   state(items);
 };
 
+const cartTotal = (items) => {
+  return items.reduce((t, p) => t + p.price * p.quantity, 0).toFixed(2);
+};
+
+const createOrder = async (orderInfo) => {
+  try {
+    const db = getFirestore();
+    const orderRef = await addDoc(collection(db, "orders"), orderInfo);
+    return orderRef.id;
+  } catch (error) {
+    console.error("Error storing order. ", error);
+    throw error;
+  }
+};
+
 export {
-  allProducts,
-  getProduct,
-  getItems,
   getItem,
-  getItemByCategory,
+  getItemsByCategory,
   allItems,
+  cartTotal,
+  createOrder,
 };
