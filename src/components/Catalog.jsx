@@ -2,13 +2,13 @@ import { Container } from "react-bootstrap";
 import Item from "./Item";
 import Message from "./Message";
 import { useEffect, useState } from "react";
-import { allProducts } from "../functions/utils";
+import { allItems } from "../functions/utils";
 
 const Catalog = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    allProducts(setProducts);
+    allItems(setProducts);
   }, []);
 
   const renderProducts = () => {
